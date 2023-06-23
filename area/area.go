@@ -33,7 +33,7 @@ func area_Sq(s Square) int {
 
 // Run-time method lookup
 
-func area_Lookup[T shape](x interface{}) int {
+func area_Lookup(x interface{}) int {
 	var y int
 
 	switch v := x.(type) {

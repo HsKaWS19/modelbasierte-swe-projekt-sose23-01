@@ -63,7 +63,3 @@ Nach Ausführen der Tests fällt auf, dass die Laufzeit der `Dict` Methode nahez
 
 
 ## Summarize your findings in a short document (you could set up a github repo).
-
-
-
-
