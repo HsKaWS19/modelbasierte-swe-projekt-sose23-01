@@ -1,8 +1,4 @@
-package main
-
-import "fmt"
-
-// Example
+package area
 
 type Rectangle struct {
 	length int
@@ -25,10 +21,6 @@ type shape interface {
 	area() int
 }
 
-func sumArea(x, y shape) int {
-	return x.area() + y.area()
-}
-
 // Introducing unique function names for overloaded methods
 
 func area_Rec(r Rectangle) int {
@@ -41,7 +33,7 @@ func area_Sq(s Square) int {
 
 // Run-time method lookup
 
-func area_Lookup(x interface{}) int {
+func area_Lookup[T shape](x interface{}) int {
 	var y int
 
 	switch v := x.(type) {
@@ -58,21 +50,6 @@ func sumArea_Lookup(x, y interface{}) int {
 	return area_Lookup(x) + area_Lookup(y)
 }
 
-func test_Lookup() {
-	var r Rectangle = Rectangle{1, 2}
-	var s Square = Square{3}
-
-	x1 := area_Rec(r) + area_Sq(s)
-
-	fmt.Printf("%d \n", x1)
-
-	x2 := sumArea_Lookup(r, s)
-	// Rectangle <= interface{}
-	// Square <= interface{}
-
-	fmt.Printf("%d \n", x2)
-}
-
 // Dictionary translation
 
 type shape_Value struct {
@@ -82,12 +59,4 @@ type shape_Value struct {
 
 func sumArea_Dict(x, y shape_Value) int {
 	return x.area(x.val) + y.area(y.val)
-}
-
-func main() {
-
-	//test_Lookup()
-
-	//test_Dict()
-
 }
