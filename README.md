@@ -21,7 +21,7 @@ Recall the “run-time method look up” (RT) and “dictionary-translation” (
 Zunächst haben wir das Go Beispiel aus der Vorlesung [siehe Folien](https://sulzmann.github.io/ModelBasedSW/lec-go-2-types-methods-interfaces.html#(7))
 so angepasst, dass wir einen Testcase für die `lookup` und eine für die `dict` Methode haben. Diese haben wir dann jeweils
 `1.000.000.000` ausgeführt, und mit dem go test tool die Laufzeit gemessen. Die Implementierung befindet sich in
-[./area.go](./area.go).
+[./area/area.go](./area/area.go).
 
 Dabei kamen wir zu folgendem Ergebnis:
 
@@ -42,7 +42,7 @@ und zunächst intuituver wirkt.
 ## Apply the RT and DT approach to one further example of your own choice.
 Für diese Aufgabe haben wir uns entschieden, eine Volumenfunktion für Körper zu implementieren. Diese haben wir auf
 Würfel und Zylinder angewandt. 
-Die Implementierung befindet sich in [./volume.go](./volume.go).
+Die Implementierung befindet sich in [./volume/volume.go](./volume/volume.go).
 
 ```go
 === RUN   TestDict
