@@ -10,22 +10,28 @@ func TestDict(t *testing.T) {
 	r := Rectangle{1, 2}
 	s := Square{4}
 
-	area_Rec_Wrapper := func(v interface{}) int {
-		return area_Rec(v.(Rectangle))
+	/*
+		area_Rec_Wrapper := func(v Rectangle) int {
+			return area_Rec(v.(Rectangle))
+		}
+
+		area_Sq_Wrapper := func(v interface{}) int {
+			return area_Sq(v.(Square))
+		}
+	*/
+
+	x := shape_Value[Rectangle]{
+		val: r,
+		area: func(v Rectangle) int {
+			return area_Rec(v)
+		},
 	}
 
-	area_Sq_Wrapper := func(v interface{}) int {
-		return area_Sq(v.(Square))
-	}
-
-	x := shape_Value{
-		val:  r,
-		area: area_Rec_Wrapper,
-	}
-
-	y := shape_Value{
-		val:  s,
-		area: area_Sq_Wrapper,
+	y := shape_Value[Square]{
+		val: s,
+		area: func(v Square) int {
+			return area_Sq(v)
+		},
 	}
 
 	for i := 0; i < RUNS; i++ {

@@ -17,7 +17,7 @@ Recall the “run-time method look up” (RT) and “dictionary-translation” (
 5. Summarize your findings in a short document (you could set up a github repo).
 
 
-## Compare the run-time performance of RT and DT (e.g. call “sumArea” in a loop and measure which version runs faster)
+## Compare the run-time performance of RT and DT
 Zunächst haben wir das Go Beispiel aus der Vorlesung [siehe Folien](https://sulzmann.github.io/ModelBasedSW/lec-go-2-types-methods-interfaces.html#(7))
 so angepasst, dass wir einen Testcase für die `lookup` und eine für die `dict` Methode haben. Diese haben wir dann jeweils
 `1.000.000.000` ausgeführt, und mit dem go test tool die Laufzeit gemessen. Die Implementierung befindet sich in
@@ -39,7 +39,7 @@ Das Ergebnis unserer Evaluierung zeigt, dass die `lookup` Methode etwa doppelt s
 Methode. Festellen konnten wir außerdem, dass die Implementierung der `lookup` Methode weniger Zeilen Code benötigt 
 und zunächst intuituver wirkt.
 
-## Apply the RT and DT approach to one further example of your own choice.
+## Apply the RT and DT approach to one further example
 Für diese Aufgabe haben wir uns entschieden, eine Volumenfunktion für Körper zu implementieren. Diese haben wir auf
 Würfel und Zylinder angewandt. 
 Die Implementierung befindet sich in [./volume/volume.go](./volume/volume.go).
@@ -56,7 +56,7 @@ ok      modelbasierte-swe-projekt-sose23-01/volume      8.557s
 Nach Ausführen der Tests fällt auf, dass die Laufzeit der `dict` Methode nahezu unverändert ist, während die Laufzeit der
 `lookup` bei `1.000.000.000` Ausführungen etwa 1 Sekunde länger benötigt. 
 
-## Extend RT and DT to deal with type assertions. See example below.
+## Extend RT and DT to deal with type assertions
 Die `lookup` Methode implementiert die Type Assertion berets durch das Switch-Case
 (siehe Zeile 41 [./areaTypeAssertion/area.go](./areaTypeAssertion/area.go)).
 
@@ -76,8 +76,25 @@ ok      modelbasierte-swe-projekt-sose23-01/areaTypeAssertion   20.071s
 ```
 
 
-## Extend RT and DT to deal with type bounds. See example below.
+## Extend RT and DT to deal with type bounds
+
+### Dict
+Wir implementieren Type Bounds für die `dict` Methode (siehe Zeile 55 [./areaTypeBounds/area.go](./areaTypeBounds/area.go)).
+> Achtung: Da die beiden Generischen Typen zwar beide Subtyp von Shape sind, in der konkreten Implementierung allerdings
+> andere Typen (Shape, Rectangle) annehmen können, benötigen wir zwei Typ Parameter T und R.
+
+Führen wir wieder den Laufzeit Test aus, so erhalten wir folgendes Ergebnis:
+
+```go 
+=== RUN   TestDict
+--- PASS: TestDict (3.67s)
+=== RUN   TestLookup
+--- PASS: TestLookup (2.93s)
+PASS
+ok      modelbasierte-swe-projekt-sose23-01/areaTypeBounds      6.607s
+```
+
+Es fällt auf, dass die `Dict` Methode mit dieser Implementierung wesentlich schneller ist als die vergleichbare Type 
+Assertion Implementierung.
 
 
-
-## Summarize your findings in a short document (you could set up a github repo).

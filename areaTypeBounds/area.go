@@ -52,11 +52,11 @@ func sumArea_Lookup(x, y interface{}) int {
 
 // Dictionary translation
 
-type shape_Value struct {
-	val  interface{}
-	area func(interface{}) int
+type shape_Value[T shape] struct {
+	val  T
+	area func(T) int
 }
 
-func sumArea_Dict(x, y shape_Value) int {
+func sumArea_Dict[T, R shape](x shape_Value[T], y shape_Value[R]) int {
 	return x.area(x.val) + y.area(y.val)
 }
