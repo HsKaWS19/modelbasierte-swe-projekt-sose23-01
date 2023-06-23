@@ -26,8 +26,19 @@ func TestDict(t *testing.T) {
 		area: area_Sq_Wrapper,
 	}
 
-	for i := 0; i < 100000000; i++ {
+	for i := 0; i < 1000000000; i++ {
 		_ = sumArea_Dict(x, y)
+
+		//fmt.Printf("%d \n", z)
+	}
+}
+
+func TestLookup(t *testing.T) {
+	r := Rectangle{1, 2}
+	s := Square{4}
+
+	for i := 0; i < 1000000000; i++ {
+		_ = sumArea_Lookup(r, s)
 
 		//fmt.Printf("%d \n", z)
 	}
