@@ -117,3 +117,14 @@ ok      modelbasierte-swe-projekt-sose23-01/areaTypeBounds      7.424s
 
 Interessant ist, dass der Lookup TestCase etwa 1 Sekunde länger benötigt, als die ursprüngliche Implementation ohne Type
 Bounds. 
+
+
+## Summary
+
+Übersicht der gemessenen Laufzeiten:
+
+|            | area | volume  | areaTypeAssertion | areaTypeBounds 
+|------------|------|---------| --------| --------
+| **lookup** | 5.18s | 5.14s  | 16.96s | 3.70s
+| **dict**   | 2.45s | 3.41s  | 3.11s | 3.72s
+
