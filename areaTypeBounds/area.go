@@ -33,20 +33,11 @@ func area_Sq(s Square) int {
 
 // Run-time method lookup
 
-func area_Lookup(x interface{}) int {
-	var y int
-
-	switch v := x.(type) {
-	case Square:
-		y = area_Sq(v)
-	case Rectangle:
-		y = area_Rec(v)
-	}
-	return y
-
+func area_Lookup[T shape](x T) int {
+	return x.area()
 }
 
-func sumArea_Lookup(x, y interface{}) int {
+func sumArea_Lookup[T, R shape](x T, y R) int {
 	return area_Lookup(x) + area_Lookup(y)
 }
 
