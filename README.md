@@ -53,13 +53,31 @@ PASS
 ok      modelbasierte-swe-projekt-sose23-01/volume      8.557s
 ```
 
-Nach Ausführen der Tests fällt auf, dass die Laufzeit der `Dict` Methode nahezu unverändert ist, während die Laufzeit der
-`Lookup` bei `1.000.000.000` Ausführungen etwa 1 Sekunde länger benötigt. 
+Nach Ausführen der Tests fällt auf, dass die Laufzeit der `dict` Methode nahezu unverändert ist, während die Laufzeit der
+`lookup` bei `1.000.000.000` Ausführungen etwa 1 Sekunde länger benötigt. 
 
 ## Extend RT and DT to deal with type assertions. See example below.
+Die `lookup` Methode implementiert die Type Assertion berets durch das Switch-Case
+(siehe Zeile 41 [./areaTypeAssertion/area.go](./areaTypeAssertion/area.go)).
+
+Für die `dict` Methode haben wir in die `sumArea_Dict` Methode zusätzlich Type Assertion Prüfungen eingebaut (siehe Zeile 62
+[./areaTypeAssertion/area.go](./areaTypeAssertion/area.go)).
+
+
+Auffällig war beim Testen, dass die `dict` Methode für den gleichen TestCase nun mit `16.96s` wesentlich länger benötigt.
+
+```go 
+=== RUN   TestDict
+--- PASS: TestDict (16.96s)
+=== RUN   TestLookup
+--- PASS: TestLookup (3.11s)
+PASS
+ok      modelbasierte-swe-projekt-sose23-01/areaTypeAssertion   20.071s
+```
 
 
 ## Extend RT and DT to deal with type bounds. See example below.
+
 
 
 ## Summarize your findings in a short document (you could set up a github repo).
