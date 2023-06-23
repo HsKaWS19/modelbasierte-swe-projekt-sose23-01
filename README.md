@@ -57,11 +57,33 @@ Nach Ausführen der Tests fällt auf, dass die Laufzeit der `dict` Methode nahez
 `lookup` bei `1.000.000.000` Ausführungen etwa 1 Sekunde länger benötigt. 
 
 ## Extend RT and DT to deal with type assertions
-Die `lookup` Methode implementiert die Type Assertion berets durch das Switch-Case
+Die `lookup` Methode implementiert die Type Assertion berets durch das Switch-Case:
+
+```go 
+	switch v := x.(type) {
+	case Square:
+		y = area_Sq(v)
+	case Rectangle:
+		y = area_Rec(v)
+	}
+```
 (siehe Zeile 41 [./areaTypeAssertion/area.go](./areaTypeAssertion/area.go)).
 
-Für die `dict` Methode haben wir in die `sumArea_Dict` Methode zusätzlich Type Assertion Prüfungen eingebaut (siehe Zeile 62
-[./areaTypeAssertion/area.go](./areaTypeAssertion/area.go)).
+Für die `dict` Methode haben wir in die `sumArea_Dict` Methode zusätzlich Type Assertion Prüfungen eingebaut:
+
+```go
+    xVal, ok := x.val.(shape)
+    if !ok {
+        fmt.Println("type of x.val not accepted")
+        return 0
+    }
+    yVal, ok := y.val.(shape)
+    if !ok {
+        fmt.Println("type of y.val not accepted")
+        return 0
+    }
+```
+(siehe Zeile 62 [./areaTypeAssertion/area.go](./areaTypeAssertion/area.go)).
 
 
 Auffällig war beim Testen, dass die `dict` Methode für den gleichen TestCase nun mit `16.96s` wesentlich länger benötigt.
@@ -79,11 +101,24 @@ ok      modelbasierte-swe-projekt-sose23-01/areaTypeAssertion   20.071s
 ## Extend RT and DT to deal with type bounds
 
 ### Dict
-Wir implementieren Type Bounds für die `dict` Methode (siehe Zeile 55 [./areaTypeBounds/area.go](./areaTypeBounds/area.go)).
-> Achtung: Da die beiden Generischen Typen zwar beide Subtyp von Shape sind, in der konkreten Implementierung allerdings
-> andere Typen (Shape, Rectangle) annehmen können, benötigen wir zwei Typ Parameter T und R.
+Wir implementieren Type Bounds für die `dict` Methode:
 
-Führen wir wieder den Laufzeit Test aus, so erhalten wir folgendes Ergebnis:
+```go 
+type shape_Value[T shape] struct {
+	val  T
+	area func(T) int
+}
+
+func sumArea_Dict[T, R shape](x shape_Value[T], y shape_Value[R]) int {
+	return x.area(x.val) + y.area(y.val)
+}
+```
+(siehe Zeile 46 [./areaTypeBounds/area.go](./areaTypeBounds/area.go)).
+
+> **Achtung:** Da die beiden generischen Typen zwar beide Subtyp von Shape sind, in der konkreten Implementierung allerdings
+> andere Typen (Square, Rectangle) annehmen können, benötigen wir zwei Typ Parameter T und R.
+
+Führen wir wieder den Laufzeit-Test aus, so erhalten wir folgendes Ergebnis:
 
 ```go 
 === RUN   TestDict
@@ -98,7 +133,17 @@ Es fällt auf, dass die `Dict` Methode mit dieser Implementierung wesentlich sch
 Assertion Implementierung.
 
 ### Lookup
-Für die Implementierung von `lookup` spezifizieren wir Type Bounds für die `area_Lookup` und `sumArea_Lookup` Methoden
+Für die Implementierung von `lookup` spezifizieren wir Type Bounds für die `area_Lookup` und `sumArea_Lookup` Methoden:
+
+```go
+func area_Lookup[T shape](x T) int {
+	return x.area()
+}
+
+func sumArea_Lookup[T, R shape](x T, y R) int {
+	return area_Lookup(x) + area_Lookup(y)
+}
+```
 (siehe Zeile 36 [./areaTypeBounds/area.go](./areaTypeBounds/area.go)).
 
 Dadurch, dass der Typ jetzt direkt bekannt ist, können wir die `area()` Methode einfach mit dem Receiver Type von `x`
