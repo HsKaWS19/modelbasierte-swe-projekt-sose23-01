@@ -1,5 +1,7 @@
 package areaTypeAssertion
 
+import "fmt"
+
 type Rectangle struct {
 	length int
 	width  int
@@ -58,5 +60,16 @@ type shape_Value struct {
 }
 
 func sumArea_Dict(x, y shape_Value) int {
-	return x.area(x.val) + y.area(y.val)
+	xVal, ok := x.val.(shape)
+	if !ok {
+		fmt.Println("type of x.val not accepted")
+		return 0
+	}
+	yVal, ok := y.val.(shape)
+	if !ok {
+		fmt.Println("type of y.val not accepted")
+		return 0
+	}
+
+	return x.area(xVal) + y.area(yVal)
 }
