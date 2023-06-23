@@ -39,8 +39,10 @@ func area_Lookup(x interface{}) int {
 	switch v := x.(type) {
 	case Square:
 		y = area_Sq(v)
+		// optional use receiver method: y = x.(Square).area()
 	case Rectangle:
 		y = area_Rec(v)
+		// optional use receiver method: y = x.(Rectangle).area()
 	}
 	return y
 

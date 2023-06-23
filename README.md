@@ -97,4 +97,23 @@ ok      modelbasierte-swe-projekt-sose23-01/areaTypeBounds      6.607s
 Es fällt auf, dass die `Dict` Methode mit dieser Implementierung wesentlich schneller ist als die vergleichbare Type 
 Assertion Implementierung.
 
+### Lookup
+Für die Implementierung von `lookup` spezifizieren wir Type Bounds für die `area_Lookup` und `sumArea_Lookup` Methoden
+(siehe Zeile 36 [./areaTypeBounds/area.go](./areaTypeBounds/area.go)).
 
+Dadurch, dass der Typ jetzt direkt bekannt ist, können wir die `area()` Methode einfach mit dem Receiver Type von `x`
+aufrufen: `x.area()`.
+
+Der Laufzeit Test ergibt:
+
+```go 
+=== RUN   TestDict
+--- PASS: TestDict (3.70s)
+=== RUN   TestLookup
+--- PASS: TestLookup (3.72s)
+PASS
+ok      modelbasierte-swe-projekt-sose23-01/areaTypeBounds      7.424s
+```
+
+Interessant ist, dass der Lookup TestCase etwa 1 Sekunde länger benötigt, als die ursprüngliche Implementation ohne Type
+Bounds. 
