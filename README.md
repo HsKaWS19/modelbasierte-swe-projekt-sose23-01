@@ -60,28 +60,28 @@ Nach Ausführen der Tests fällt auf, dass die Laufzeit der `dict` Methode nahez
 Die `lookup` Methode implementiert die Type Assertion berets durch das Switch-Case:
 
 ```go 
-	switch v := x.(type) {
-	case Square:
-		y = area_Sq(v)
-	case Rectangle:
-		y = area_Rec(v)
-	}
+switch v := x.(type) {
+case Square:
+    y = area_Sq(v)
+case Rectangle:
+    y = area_Rec(v)
+}
 ```
 (siehe Zeile 41 [./areaTypeAssertion/area.go](./areaTypeAssertion/area.go)).
 
 Für die `dict` Methode haben wir in die `sumArea_Dict` Methode zusätzlich Type Assertion Prüfungen eingebaut:
 
 ```go
-    xVal, ok := x.val.(shape)
-    if !ok {
-        fmt.Println("type of x.val not accepted")
-        return 0
-    }
-    yVal, ok := y.val.(shape)
-    if !ok {
-        fmt.Println("type of y.val not accepted")
-        return 0
-    }
+xVal, ok := x.val.(shape)
+if !ok {
+    fmt.Println("type of x.val not accepted")
+    return 0
+}
+yVal, ok := y.val.(shape)
+if !ok {
+    fmt.Println("type of y.val not accepted")
+    return 0
+}
 ```
 (siehe Zeile 62 [./areaTypeAssertion/area.go](./areaTypeAssertion/area.go)).
 
